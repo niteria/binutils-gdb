@@ -1432,6 +1432,9 @@ struct compunit_symtab
      instruction).  This is supported by GCC since 4.5.0.  */
   unsigned int epilogue_unwind_valid : 1;
 
+  /* This CU was produced by Glasgow Haskell Compiler */
+  unsigned int producer_is_ghc : 1;
+
   /* struct call_site entries for this compilation unit or NULL.  */
   htab_t call_site_htab;
 

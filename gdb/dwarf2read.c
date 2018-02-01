@@ -10501,6 +10501,10 @@ process_full_comp_unit (struct dwarf2_per_cu_data *per_cu,
 	cust->epilogue_unwind_valid = 1;
 
       cust->call_site_htab = cu->call_site_htab;
+
+      if (startswith (cu->producer,
+            "The Glorious Glasgow Haskell Compilation System"))
+        cust->producer_is_ghc = 1;
     }
 
   if (dwarf2_per_objfile->using_index)

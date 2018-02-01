@@ -2458,7 +2458,14 @@ get_frame_address_in_block (struct frame_info *this_frame)
       && (get_frame_type (this_frame) == NORMAL_FRAME
 	  || get_frame_type (this_frame) == TAILCALL_FRAME
 	  || get_frame_type (this_frame) == INLINE_FRAME))
-    return pc - 1;
+    {
+      /* GHC intermixes metadata (info tables) with code, going back is
+         guaranteed to land us in the metadata.  */
+      struct compunit_symtab *cust = find_pc_compunit_symtab (pc);
+      if (cust != NULL && cust->producer_is_ghc)
+        return pc;
+      return pc - 1;
+    }
 
   return pc;
 }
